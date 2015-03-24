@@ -106,7 +106,11 @@ public class SVDocument {
 	}
 	
 	public String[] getHeader(){
-		return entries.get(0);
+		if (firstLineIsHeader){
+			return entries.get(0);
+		} else {
+			return null;
+		}
 	}
 
 }
