@@ -15,17 +15,12 @@ public class JASEVAL {
 	public SVDocument readSVFile(String path, String delimiter, boolean firstLineIsHeader) throws IOException{
 		System.out.print("[JASEVAL] reading " + path + "... ");
 		
-		SVDocument doc = new SVDocument();
+		SVDocument doc = new SVDocument(firstLineIsHeader);
 		FileReader fr = new FileReader(new File(path));
 		BufferedReader br = new BufferedReader(fr);
 		String currLine;
 		
 		System.out.print("(Detected File Encoding: " + fr.getEncoding() + ") ");
-		
-		//set header
-		if (firstLineIsHeader && (currLine = br.readLine()) != null){
-			doc.setHeader(br.readLine().split(delimiter));
-		}
 		
 		//read content
 		while ((currLine = br.readLine()) != null){
@@ -51,7 +46,7 @@ public class JASEVAL {
 		}
 
 		// write to file
-		if (encoding == null) encoding = "URF-8";
+		if (encoding == null) encoding = "UTF-8";
 		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
 				new FileOutputStream(path), encoding));
 		out.write(sb.toString());
