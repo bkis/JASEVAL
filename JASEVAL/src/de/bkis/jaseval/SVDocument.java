@@ -81,15 +81,6 @@ public class SVDocument {
 		}
 	}
 	
-	public String[] removeEntry(int index){
-		if (entries.size() > index){
-			return entries.remove(index);
-		} else {
-			System.out.println("[JASEVAL] Error! Entry at index " + index + " could not be removed / doesn't exist!");
-			return null;
-		}
-	}
-	
 	public int getFieldIndex(String field){
 		if (header == null){
 			System.out.println("[JASEVAL] Error! No header specified.");
@@ -109,6 +100,23 @@ public class SVDocument {
 	
 	public String[] getHeader(){
 		return header;
+	}
+	
+	public boolean removeEntry(String[] entry){
+		return entries.remove(entry);
+	}
+	
+	public String[] removeEntry(int index){
+		if (entries.size() > index){
+			return entries.remove(index);
+		} else {
+			System.out.println("[JASEVAL] Error! Entry at index " + index + " could not be removed / doesn't exist!");
+			return null;
+		}
+	}
+	
+	public int entriesCount(){
+		return entries.size();
 	}
 
 }
