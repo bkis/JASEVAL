@@ -1,6 +1,7 @@
 package de.bkis.jaseval;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -117,6 +118,20 @@ public class SVDocument {
 	
 	public int entriesCount(){
 		return entries.size();
+	}
+	
+	public void addField(String fieldName){
+		System.out.print("[JASEVAL] adding field \"" + fieldName + "\"... ");
+		header = Arrays.copyOf(header, header.length + 1);
+		header[header.length - 1] = fieldName;
+		
+		for (int i = 0; i < entries.size(); i++) {
+			String[] entry = Arrays.copyOf(entries.get(i), entries.get(i).length + 1);
+			entry[entry.length-1] = "";
+			entries.remove(i);
+			entries.add(i, entry);
+		}
+		System.out.println("- OK");
 	}
 
 }
