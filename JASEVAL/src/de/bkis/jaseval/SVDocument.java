@@ -8,13 +8,12 @@ public class SVDocument {
 	
 	private int currIndex;
 	private ArrayList<String[]> entries;
-	private boolean firstLineIsHeader;
+	private String[] header;
 	
 
-	public SVDocument(boolean firstLineIsHeader){
+	public SVDocument(){
 		currIndex = 0;
 		entries = new ArrayList<String[]>();
-		this.firstLineIsHeader = firstLineIsHeader;
 	}
 	
 	public String[] getEntry(int index){
@@ -37,7 +36,6 @@ public class SVDocument {
 				}
 			}
 		}
-		
 		return results;
 	}
 	
@@ -66,17 +64,17 @@ public class SVDocument {
 	}
 	
 	public void addEntry(String entry, String delimiter){
-		String[] e = entry.split(delimiter, (firstLineIsHeader ? getHeader().length : -1));
+		String[] e = entry.split(delimiter, (header != null ? header.length : -1));
 		addEntry(e);
 	}
 	
 	public void addEntry(String[] entry){
 		//check field count
-		if (firstLineIsHeader && entry.length != getHeader().length){
+		if (entries.size() > 0 && header != null && entry.length != getHeader().length){
 			System.out.println("[JASEVAL] Error! Added entries field count "
 					+ "doesn't match header length: \"" + entry + "\"");
 		} else if (entries.size() > 0 && entry.length != entries.get(entries.size()-1).length) {
-			System.out.println("[JASEVAL] Warning! Added entries field count "
+			System.out.println("[JASEVAL] Error! Added entries field count "
 					+ "doesn't match existing entries: \"" + entry + "\"");
 		} else {
 			entries.add(entry);
@@ -93,7 +91,7 @@ public class SVDocument {
 	}
 	
 	public int getFieldIndex(String field){
-		if (!firstLineIsHeader){
+		if (header == null){
 			System.out.println("[JASEVAL] Error! No header specified.");
 			return -1;
 		} else {
@@ -105,12 +103,12 @@ public class SVDocument {
 		}
 	}
 	
+	public void setHeader(String headerLine, String delimiter){
+		header = headerLine.split(delimiter);
+	}
+	
 	public String[] getHeader(){
-		if (firstLineIsHeader){
-			return entries.get(0);
-		} else {
-			return null;
-		}
+		return header;
 	}
 
 }
