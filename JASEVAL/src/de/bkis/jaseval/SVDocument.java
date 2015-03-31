@@ -60,6 +60,7 @@ public class SVDocument {
 		if (entries.size() > currIndex){
 			return true;
 		} else {
+			reset();
 			return false;
 		}
 	}
