@@ -105,11 +105,15 @@ public class SVDocument {
 	}
 	
 	public boolean removeEntry(String[] entry){
-		return entries.remove(entry);
+		long index = entries.indexOf(entry);
+		boolean done = entries.remove(entry);
+		if (index <= currIndex) currIndex--;
+		return done;
 	}
 	
 	public String[] removeEntry(int index){
 		if (entries.size() > index){
+			if (index <= currIndex) currIndex--;
 			return entries.remove(index);
 		} else {
 			System.out.println("[JASEVAL] Error! Entry at index " + index + " could not be removed / doesn't exist!");
