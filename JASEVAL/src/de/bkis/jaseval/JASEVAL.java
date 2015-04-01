@@ -55,16 +55,19 @@ public class JASEVAL {
 			for (String s : currEntry) sb.append(s + delimiter);
 			sb.replace(sb.length() - delimiter.length(), sb.length(), "\n");
 		}
+		
+		writeToFile(sb.toString(), path, encoding);
 
-		// write to file
+		System.out.println("- OK");
+	}
+	
+	public void writeToFile(String content, String path, String encoding) throws IOException{
 		if (encoding == null) encoding = "UTF-8";
 		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
 				new FileOutputStream(path), encoding));
-		out.write(sb.toString());
+		out.write(content);
 		out.flush();
 		out.close();
-		
-		System.out.println("- OK");
 	}
 
 }
